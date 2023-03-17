@@ -2,7 +2,6 @@ data {
     int M; //number of years analyzed
 }
 
-
 generated quantities {
     real lambda=fabs(normal_rng(0, 121));
     int y_sim[M];
