@@ -2,14 +2,13 @@ data {
     int<lower=1> N;  // Number of samples
 }
 
-generte quantities {
+generated quantities {
     matrix[N,3] X;
 
-    {vector [N] zeros = rep_vector(0,N)
+    vector [N] zeros = rep_vector(0,N);
 
     for (j in 1:3) {
-        X[:,j]=to_vector(normal_rng(zeros,1))
-    }
+        X[:,j]=to_vector(normal_rng(zeros,1));
     }
 
     vector [3] beta;

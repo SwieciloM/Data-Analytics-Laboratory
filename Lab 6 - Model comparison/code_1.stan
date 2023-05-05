@@ -1,8 +1,8 @@
 data {
-    int<lower=1> N;  // Number of samples
+    int<lower=0> N;  // Number of samples
 }
 
-generte quantities {
+generated quantities {
     real theta = 0.01;
     array [N] real y;
     for (i in 1:N) {

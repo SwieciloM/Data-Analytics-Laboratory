@@ -10,12 +10,12 @@ parameters {
 }
 
 model {
-    target+=-2*log(sigma);
-    target+=gamma_lpdf(nu|2,0.1);
-    target+=student_t_lpdf(y|nu,mu,sigma);
+    target += -2*log(sigma);
+    target += gamma_lpdf(nu|2,0.1);
+    target += student_t_lpdf(y|nu,mu,sigma);
 }
 
-generte quantities {
+generated quantities {
     vector[N] log_lik;
     array [N] real y_hat;
     for (j in 1:N) {
