@@ -2,8 +2,8 @@ data {
   int<lower=0> N;  // number of observations
 
   // Output
-  int<lower=2> K;  // number of ordinal categories
-  int<lower=1,upper=K> y[N];  // ordinal outcome
+  int K;  // number of ordinal categories
+  int y[N];  // ordinal outcome
 
   // Income
   real income[N]; // predictor 1
@@ -18,14 +18,16 @@ parameters {
   ordered[K-1] c;  // cutpoints
   real beta_income;   // coef income
   ordered[10] beta_satisfy;   // coef satisfaction
+  //vector[10] beta_satisfy;
   real beta_child;   // coef child
 }
 model {
   // priors
   c ~ normal(0, 3);
-  beta_income ~ normal(0, 2);
-  beta_satisfy ~ normal(0, 0.5);
-  beta_child ~ normal(0, 3);
+  beta_income ~ normal(0, 1);
+  beta_satisfy ~ normal(0, 1);
+  beta_child ~ normal(0, 1);
+
 
   // likelihood
   for(n in 1:N) 
@@ -33,6 +35,7 @@ model {
 }
 generated quantities{
     real happy[N];
+
     for (n in 1:N) {
         happy[n] = ordered_logistic_rng(income[n] * beta_income + beta_satisfy[satisfaction[n]] + beta_child * child[n], c);
     }
