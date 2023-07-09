@@ -11,7 +11,7 @@ data {
   int hous_sat[N];                          // Predictor 2 (housing_satisfaction)
   int com_even_avail[N];                    // Predictor 3 (community_events_availability)
   int sen_of_sec[N];                        // Predictor 4 (sense_of_security)
-  real ann_hous_inc[N];                    // Predictor 5 (annual_household_income)
+  real ann_hous_inc[N];                     // Predictor 5 (annual_household_income)
   int liv_with_child[N];                    // Predictor 6 (living_with_children)
   int is_disabled[N];                       // Predictor 7 (is_disabled)
 }
@@ -52,15 +52,15 @@ model {
 }
 
 generated quantities{
-    real happy[N];
+  real happy[N];
 
-    for (n in 1:N) {
-        happy[n] = ordered_logistic_rng(coef_neigh_sat[neigh_sat[n]] + 
-                            coef_hous_sat[hous_sat[n]] +        
-                            coef_com_even_avail[com_even_avail[n]] +
-                            coef_sen_of_sec[sen_of_sec[n]] +
-                            coef_ann_hous_inc * ann_hous_inc[n] +
-                            coef_liv_with_child * liv_with_child[n] +
-                            coef_is_disabled * is_disabled[n], c);
-    }
+  for (n in 1:N) {
+    happy[n] = ordered_logistic_rng(coef_neigh_sat[neigh_sat[n]] + 
+                        coef_hous_sat[hous_sat[n]] +        
+                        coef_com_even_avail[com_even_avail[n]] +
+                        coef_sen_of_sec[sen_of_sec[n]] +
+                        coef_ann_hous_inc * ann_hous_inc[n] +
+                        coef_liv_with_child * liv_with_child[n] +
+                        coef_is_disabled * is_disabled[n], c);
+  }
 }
