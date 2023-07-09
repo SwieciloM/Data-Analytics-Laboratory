@@ -1,3 +1,8 @@
+parameters {
+  ordered[K-1] c;  // cutpoints
+  real beta_income;   // coef income
+  ordered[10] beta_satisfy;   // coef satisfaction
+}
 generated quantities{
     ordered[10] beta;
 
