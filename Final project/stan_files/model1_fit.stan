@@ -20,10 +20,10 @@ parameters {
   ordered[K-1] c;                           // Cutpoints
   
   // Coefficients for predictors (1-9)
-  ordered[10] coef_neigh_sat;               // Coefficient 1 (neighborhood_satisfaction)
-  ordered[10] coef_hous_sat;                // Coefficient 2 (housing_satisfaction)
-  ordered[5] coef_com_even_avail;           // Coefficient 3 (community_events_availability)
-  ordered[10] coef_sen_of_sec;              // Coefficient 4 (sense_of_security)
+  vector[10] coef_neigh_sat;               // Coefficient 1 (neighborhood_satisfaction)
+  vector[10] coef_hous_sat;                // Coefficient 2 (housing_satisfaction)
+  vector[5] coef_com_even_avail;           // Coefficient 3 (community_events_availability)
+  vector[10] coef_sen_of_sec;              // Coefficient 4 (sense_of_security)
   real coef_ann_hous_inc;                   // Coefficient 5 (annual_household_income)
   real coef_liv_with_child;                 // Coefficient 6 (living_with_children)
   real coef_is_disabled;                    // Coefficient 7 (is_disabled)
@@ -53,7 +53,7 @@ model {
 
 generated quantities{
   real happy[N];
-
+  real log_lik[N];
   for (n in 1:N) {
     happy[n] = ordered_logistic_rng(coef_neigh_sat[neigh_sat[n]] + 
                         coef_hous_sat[hous_sat[n]] +        
@@ -62,5 +62,14 @@ generated quantities{
                         coef_ann_hous_inc * ann_hous_inc[n] +
                         coef_liv_with_child * liv_with_child[n] +
                         coef_is_disabled * is_disabled[n], c);
+
+    //real ordered_logistic_glm_lpmf(int y | row_vector x, vector beta, vector c)        
+    log_lik[n] = ordered_logistic_lpmf(y[n]|coef_neigh_sat[neigh_sat[n]] + 
+                        coef_hous_sat[hous_sat[n]] +        
+                        coef_com_even_avail[com_even_avail[n]] +
+                        coef_sen_of_sec[sen_of_sec[n]] +
+                        coef_ann_hous_inc * ann_hous_inc[n] +
+                        coef_liv_with_child * liv_with_child[n] +
+                        coef_is_disabled * is_disabled[n],c);
   }
 }
