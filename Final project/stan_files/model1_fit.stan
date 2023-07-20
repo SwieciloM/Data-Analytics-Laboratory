@@ -6,7 +6,7 @@ data {
   int K;  // number of ordinal categories
   int y[N];  // ordinal outcome
 
-  // Predictors (1-9)
+  // Predictors (1-7)
   int neigh_sat[N];                         // Predictor 1 (neighborhood_satisfaction)
   int hous_sat[N];                          // Predictor 2 (housing_satisfaction)
   int com_even_avail[N];                    // Predictor 3 (community_events_availability)
@@ -19,7 +19,7 @@ data {
 parameters {
   ordered[K-1] c;                           // Cutpoints
   
-  // Coefficients for predictors (1-9)
+  // Coefficients for predictors (1-7)
   vector[10] coef_neigh_sat;               // Coefficient 1 (neighborhood_satisfaction)
   vector[10] coef_hous_sat;                // Coefficient 2 (housing_satisfaction)
   vector[5] coef_com_even_avail;           // Coefficient 3 (community_events_availability)
